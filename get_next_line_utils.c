@@ -6,7 +6,7 @@
 /*   By: jchu <jchu@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 13:41:56 by jchu              #+#    #+#             */
-/*   Updated: 2023/01/13 14:07:39 by jchu             ###   ########.fr       */
+/*   Updated: 2023/01/14 19:25:55 by jchu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*pickup(char *str, int *ret)
 	idx = 0;
 	while (str && str[idx] && str[idx] != '\n')
 		idx++;
-	newstring = malloc(sizeof(char) * (idx + 1));
+	newstring = malloc(sizeof(char) * (idx + 2));
 	if (!newstring)
 		return (NULL);
 	if (ft_strchr(str, '\n') != 0)
@@ -79,7 +79,8 @@ char	*pickup(char *str, int *ret)
 		newstring[idx] = str[idx];
 		idx++;
 	}
-	newstring[idx] = 0;
+	newstring[idx] = '\n';
+	newstring[idx + 1] = 0;
 	return (newstring);
 }
 

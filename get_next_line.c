@@ -6,7 +6,7 @@
 /*   By: jchu <jchu@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 13:36:33 by jchu              #+#    #+#             */
-/*   Updated: 2023/01/13 14:07:49 by jchu             ###   ########.fr       */
+/*   Updated: 2023/01/14 19:29:33 by jchu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ int	get_next_line(const int fd, char **line)
 	return (val);
 }
 
-/*#include <fcntl.h>
+/*
+#include <fcntl.h>
 int main()
 {
    int fd = open("test", O_RDONLY);
@@ -55,10 +56,10 @@ int main()
 
    while (ret > 0)
    {
-      printf ("%s\n", line);
+      printf ("%s", line);
       ret = get_next_line(fd, &line);
    }
-   printf ("%s\n", line);
+   printf ("%s", line);
    free(line);
    return (0);
 }*/
