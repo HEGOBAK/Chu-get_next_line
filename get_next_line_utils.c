@@ -6,7 +6,7 @@
 /*   By: jchu <jchu@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 13:41:56 by jchu              #+#    #+#             */
-/*   Updated: 2023/01/14 19:25:55 by jchu             ###   ########.fr       */
+/*   Updated: 2023/01/16 18:34:44 by jchu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,28 +22,32 @@ size_t	ft_strlen(const char *str)
 	return (idx);
 }
 
-char	*ft_strjoin(const char *s1, const char *s2)
+char	*ft_strjoin(char *s1, char *s2, int val)
 {
-	int		count;
+	int		i;
 	int		idx;
 	char	*newstring;
-	int		total_len;
 
-	if (s1)
-		total_len = ft_strlen(s1);
-	if (s2)
-		total_len = ft_strlen(s1) + ft_strlen(s2);
-	newstring = (char *)malloc(sizeof(char) * (total_len + 1));
+	i = 0;
+	idx = 0;
+	newstring = malloc(sizeof(*s1) * (ft_strlen(s1) + val + 1));
 	if (!newstring)
 		return (NULL);
-	idx = 0;
-	count = 0;
-	while (s1 && s1[idx])
-		newstring[count++] = s1[idx++];
-	idx = 0;
-	while (s2 && s2[idx])
-		newstring[count++] = s2[idx++];
-	newstring[count] = '\0';
+	if (s1)
+	{
+		while (s1[idx])
+		{
+			newstring[idx] = s1[idx];
+			idx++;
+		}
+		free(s1);
+	}
+	while (val > 0)
+	{
+		newstring[idx++] = s2[i++];
+		val--;
+	}
+	newstring[idx] = '\0';
 	return (newstring);
 }
 
@@ -60,45 +64,67 @@ char	*ft_strchr(const char *str, int c)
 	return (NULL);
 }
 
-char	*pickup(char *str, int *ret)
+int	count_idx(char *str)
 {
+	int	i;
+
+	i = 0;
+	while (str && str[i])
+	{
+		i++;
+		if (str[i - 1] == '\n')
+			break ;
+	}
+	return (i);
+}
+
+char	*pickup(char *str)
+{
+	char	*line;
 	int		idx;
-	char	*newstring;
 
 	idx = 0;
-	while (str && str[idx] && str[idx] != '\n')
-		idx++;
-	newstring = malloc(sizeof(char) * (idx + 2));
-	if (!newstring)
+	if (!str || !str[idx])
 		return (NULL);
-	if (ft_strchr(str, '\n') != 0)
-		*ret = 1;
+	idx = count_idx(str);
+	line = malloc(sizeof(char) * (idx + 1));
+	if (!line)
+		return (NULL);
 	idx = 0;
-	while (str && str[idx] && str[idx] != '\n')
+	while (str && str[idx])
 	{
-		newstring[idx] = str[idx];
+		line[idx] = str[idx];
 		idx++;
+		if (str[idx - 1] == '\n')
+			break ;
 	}
-	newstring[idx] = '\n';
-	newstring[idx + 1] = 0;
-	return (newstring);
+	line[idx] = 0;
+	return (line);
 }
 
 char	*left_over(char *str)
 {
+	int		i;
 	int		idx;
 	int		count;
 	char	*newstring;
 
-	idx = 0;
-	while (str && str[idx] && str[idx] != '\n')
-		idx++;
-	newstring = malloc(sizeof(char) * (ft_strlen(str) - idx + 1));
+	count = 0;
+	if (!str || !str[count])
+		return (NULL);
+	idx = ft_strlen(str) - count_idx(str);
+	if (!idx)
+	{
+		free(str);
+		return (NULL);
+	}
+	newstring = malloc(sizeof(char) * (idx + 1));
 	if (!newstring)
 		return (NULL);
-	count = 0;
-	while (str && str[idx])
-		newstring[count++] = str[++idx];
-	newstring[count] = 0;
+	i = count_idx(str);
+	while (count < idx)
+		newstring[count++] = str[i++];
+	newstring[count] = '\0';
+	free(str);
 	return (newstring);
 }

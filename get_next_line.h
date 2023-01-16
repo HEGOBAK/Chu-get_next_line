@@ -6,7 +6,7 @@
 /*   By: jchu <jchu@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 13:41:53 by jchu              #+#    #+#             */
-/*   Updated: 2023/01/13 14:07:21 by jchu             ###   ########.fr       */
+/*   Updated: 2023/01/16 18:33:13 by jchu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,16 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-# define BUFFER_SIZE 42
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
 
-int		get_next_line(const int fd, char **line);
+char	*get_next_line(const int fd);
 size_t	ft_strlen(const char *str);
-char	*ft_strjoin(const char *s1, const char *s2);
+char	*ft_strjoin(char *s1, char *s2, int val);
 char	*ft_strchr(const char *str, int c);
-char	*pickup(char *str, int *ret);
+char	*pickup(char *str);
 char	*left_over(char *str);
-void	norm(const int fd, char *buf, int *val);
+char	*ft_get_line(int fd, char *str);
 
 #endif
