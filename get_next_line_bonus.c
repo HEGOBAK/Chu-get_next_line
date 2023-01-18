@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jchu <jchu@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/13 13:36:33 by jchu              #+#    #+#             */
-/*   Updated: 2023/01/18 16:24:23 by jchu             ###   ########.fr       */
+/*   Created: 2023/01/18 16:24:57 by jchu              #+#    #+#             */
+/*   Updated: 2023/01/18 16:30:58 by jchu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 size_t	ft_strlen(const char *str)
 {
@@ -50,15 +50,15 @@ char	*ft_get_line(int fd, char *str)
 
 char	*get_next_line(int fd)
 {
-	static char		*str;
+	static char		*str[1024];
 	char			*line;
 
 	if (BUFFER_SIZE <= 0 || fd < 0 || fd > 1023)
 		return (NULL);
-	str = ft_get_line(fd, str);
-	if (!str)
+	str[fd] = ft_get_line(fd, str[fd]);
+	if (!str[fd])
 		return (NULL);
-	line = pickup(str);
-	str = left_over(str);
+	line = pickup(str[fd]);
+	str[fd] = left_over(str[fd]);
 	return (line);
 }
